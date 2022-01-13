@@ -1,0 +1,50 @@
+//Mixin encargado de crear estilos con metodología css BEM, recibe 2 parametros(tipo = el/mf, nombre) 
+@mixin BEM($type, $name) {
+
+    //Crea elementos
+    @if $type=="el" {
+        @at-root &__#{$name} {
+            @content;
+        }
+    }
+
+    //Crea modificadores
+    @else if $type=="mf" {
+        @at-root &--#{$name} {
+            @content;
+        }
+    }
+}
+
+@mixin breakpoint($size) {
+    @if $size=="sm" {
+        @media only screen and (max-width: 668px) {
+            @content;
+        }
+    }
+
+    @else if $size=="md" {
+        @media only screen and (max-width: 768px) {
+            @content;
+        }
+    }
+
+    @else if $size=="lg" {
+        @media only screen and (max-width: 992px) {
+            @content;
+        }
+    }
+
+    @else if $size=="xl" {
+        @media only screen and (max-width: 1200px) {
+            @content;
+        }
+    }
+
+    @else if $size=="xxl" {
+        @media only screen and (max-width: 1400px) {
+            @content;
+        }
+    }
+
+}
