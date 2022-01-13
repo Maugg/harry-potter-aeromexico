@@ -1,0 +1,52 @@
+@use "../../../Styles/mixins"as *;
+$map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
+    Slytherin: linear-gradient(135deg, #1C792B 0%, #82E95E 100%),
+    Ravenclaw: linear-gradient(135deg, #0597B7 0%, #66D1FF 100%),
+    Hufflepuff: linear-gradient(135deg, #FFC700 0%, #FFF388 100%));
+
+.card {
+   
+    border-radius: 16px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 5px 5px 10px gray;
+    @each $key,
+    $var in $map-house {
+        @include BEM("mf", "background-#{$key}") {
+            background: $var;
+        }
+    }
+
+    @include BEM("el","thumbnail"){
+        width: 40%;
+        img{
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+    
+    @include BEM("el", "description") {
+        width: 60%;
+        font-size: 18px;
+        line-height: 27px;
+        color: #374A59;
+        padding: 20px;
+        p:not(.card__head){
+            span{
+                font-family: 'open_sansbold';
+            }
+        }
+    }
+
+    @include BEM("el", "head") {
+        font-family: "open_sansbold", 'Times New Roman', Times, serif;
+        font-size: 30px;
+    }
+
+
+
+
+
+}
