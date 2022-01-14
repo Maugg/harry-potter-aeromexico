@@ -4,12 +4,12 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
     Ravenclaw: linear-gradient(135deg, #0597B7 0%, #66D1FF 100%),
     Hufflepuff: linear-gradient(135deg, #FFC700 0%, #FFF388 100%));
 
-.card {
+.card-character {
    
     border-radius: 16px;
     display: flex;
     overflow: hidden;
-    box-shadow: 5px 5px 10px gray;
+    //box-shadow: 3px 3px 10px darkgrey;
     @each $key,
     $var in $map-house {
         @include BEM("mf", "background-#{$key}") {
@@ -19,11 +19,20 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
 
     @include BEM("el","thumbnail"){
         width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div{
+            width: 210px;
+            height: 210px;
+        }
         img{
-            width: 250px;
-            height: 250px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
+            object-position: 50% 30%;
+
         }
     }
     
@@ -32,11 +41,16 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
         font-size: 18px;
         line-height: 27px;
         color: #374A59;
-        padding: 20px;
+        padding: 25px;
         p:not(.card__head){
+            word-spacing: 2px;
+            text-transform: capitalize;
             span{
                 font-family: 'open_sansbold';
             }
+        }
+        p{
+            margin: 0;
         }
     }
 
@@ -45,8 +59,21 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
         font-size: 30px;
     }
 
+    @include BEM("el","resume"){
+        color: #999999;
+        text-transform: uppercase;
+        font-family: 'open_sanssemibold';
+        word-spacing: 3px;
+        
+    }
 
+    @include BEM("mf", "status-live"){
+        background-color: #ffffff;
+    }
 
+    @include BEM("mf", "status-dead"){
+        background-color: #CCCCCC;
+    }
 
 
 }
