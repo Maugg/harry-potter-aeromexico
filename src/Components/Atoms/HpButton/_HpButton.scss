@@ -1,0 +1,15 @@
+.button-hp{
+    display: inline-block;
+    padding: 15px;
+    text-transform: uppercase;
+    font-family: "open_sanssemibold";
+    letter-spacing: 2px;
+    font-size: 17px;
+    border: 4px solid #6B63B5 ;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all .2s linear;
+    &:hover{
+        background: rgba(107, 99, 181, 0.6);
+    }
+  
+}

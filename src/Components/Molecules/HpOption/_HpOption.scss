@@ -1,0 +1,48 @@
+%btn-option {
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #6B63B5;
+    padding: 8px 0;
+    width: 50%;
+    font-family: "open_sanssemibold";
+    text-transform: uppercase;
+    font-size: 14px;
+
+}
+
+.content-options {
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.content-buttons {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+
+.content-favorite {
+    background-color: #6B63B5;
+    width: 100%;
+    border-radius: 10px;
+    padding: 40px 20px 20px 20px;
+}
+
+.btn-favorite {
+    @extend %btn-option;
+    border-right: 1px solid #403B6D;
+    border-radius: 0 0 0 10px;
+
+    svg {
+        fill: white;
+    }
+}
+
+.btn-user {
+    @extend %btn-option;
+    border-radius: 0 0 10px 0;
+}
