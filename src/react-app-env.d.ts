@@ -24,3 +24,9 @@ type RequestBody = {
     headers: Headers,
     body: string | FormData;
 }
+
+type DbCharacters = {
+    students:Character[],
+    staff:Character[],
+    characters:Character[]
+}

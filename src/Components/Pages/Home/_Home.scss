@@ -1,9 +1,20 @@
+@use "../../../Styles/mixins"as *;
 
-.container{
-    width: 90%;
+.container-hp{
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
 
-
+.filter{
+    text-align: center;
+    margin-top: 200px;
+    @include BEM("el","options"){
+        text-align: center;
+        button{
+            width: 288px;
+        }
+    }
+    
+}
 

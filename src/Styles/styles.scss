@@ -1,3 +1,7 @@
 @use '../config';
 @use '../Components/Molecules/Card/Card';
 @use '../Components/Pages/Home/Home';
+@use '../Components/Atoms/HpButton/HpButton';
+@use '../Components/Molecules/HpOption/HpOption';
+@use '../Components/Molecules/HpFavorite/HpFavorite';
+@import "~bootstrap/scss/bootstrap";
