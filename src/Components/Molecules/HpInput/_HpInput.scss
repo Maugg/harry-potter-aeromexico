@@ -1,0 +1,75 @@
+@use "../../../Styles/mixins"as *;
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    font-family: "open_sansregular";
+    @include BEM("el", "label") {
+        color: #263238;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+
+    }
+
+    @include BEM("el", "input") {
+        background-color: #F2F3F3;
+        border-radius: 5.33333px 5.33333px 0px 0px;
+        height: 70px;
+        font-family: "open_sansregular";
+        border: none;
+        letter-spacing: 1.2px;
+        font-size: 20px;
+        border-bottom: 2px solid #BABFC0;
+        //color: black;
+        &:focus{
+            outline-color: #0E4DA4;
+        }
+    }
+
+}
+.label-radio{
+    width: 27px;
+    height: 27px;
+    border: 3px solid #DADADA;
+    border-radius: 50%;
+    margin-right: 13px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    &::after{
+        content: "";
+        display: inline-block;
+        visibility: hidden;
+        width: 13px;
+        height: 13px;
+        background-color: #0E4DA4;
+        border-radius: 50%;
+    }
+}
+
+.label-text{
+    font-family: "open_sansregular";
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.label-title{
+    font-family: "open_sansregular";
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.label-file{
+    color:#263238;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+input[type=radio]:checked + .label-radio::after{
+    visibility: visible;
+}
+
+input[type=radio]:checked + .label-radio{
+    border-color: #0E4DA4;
+}

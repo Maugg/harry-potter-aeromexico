@@ -30,3 +30,5 @@ type DbCharacters = {
     staff:Character[],
     characters:Character[]
 }
+
+type Input = "text" | "radio" | "file";

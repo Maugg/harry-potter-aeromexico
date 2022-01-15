@@ -4,6 +4,7 @@ import { ReactComponent as IconFavorite } from "../../../img/Rectangle 4.svg";
 import { ReactComponent as IconUser } from "../../../img/User_fill_add.svg";
 import HpButton from "../../Atoms/HpButton/HpButton";
 import HpFavorite from "../HpFavorite/HpFavorite";
+import HpInput from "../HpInput/HpInput";
 function HpOption(): JSX.Element {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [show, setShow] = useState(false);
@@ -25,22 +26,40 @@ function HpOption(): JSX.Element {
                 show={show}
                 onHide={handleClose}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Agregar un personaje
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
-                </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-center py-4">
-                <HpButton text="guardar" className="w-50" />
-                </Modal.Footer>
+                <form>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Agregar un personaje
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{ paddingRight: "40px" }}>
+                        <div className="grid-flex-2 gap">
+                            <div><HpInput textLabel="Nombre" type="text" /></div>
+                            <div><HpInput textLabel="cumpleaños" type="text" /></div>
+                            <div><HpInput textLabel="color de ojos" type="text" /></div>
+                            <div><HpInput textLabel="color de pelo" type="text" /></div>
+                        </div>
+                        <div className="grid-flex-2 gap">
+                            <div>
+                                <p className="label-title">género</p>
+                                <HpInput textLabel="Mujer" type="radio" name="gender" className="me-5" />
+                                <HpInput textLabel="Hombre" type="radio" name="gender" />
+                            </div>
+                            <div>
+                                <p className="label-title">posición</p>
+                                <HpInput textLabel="estudiante" type="radio" name="type" className="me-5" />
+                                <HpInput textLabel="staff" type="radio" name="type" />
+                            </div>
+                            <div>
+                                <HpInput type="file" textLabel="" id="file" className="label-file" />
+                            </div>
+
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer className="d-flex justify-content-center py-4">
+                        <HpButton text="guardar" className="w-50" />
+                    </Modal.Footer>
+                </form>
             </Modal>
         </>
     );
@@ -49,8 +68,8 @@ function HpOption(): JSX.Element {
         setShowMenu(!showMenu);
     }
 
-    function handleClose(){setShow(false);}
-    function handleShow(){setShow(true);}
+    function handleClose() { setShow(false); }
+    function handleShow() { setShow(true); }
 
 }
 
