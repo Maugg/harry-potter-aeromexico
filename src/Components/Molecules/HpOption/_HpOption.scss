@@ -1,9 +1,9 @@
 @use "../../../Styles/mixins"as *;
-
+@use "../../../Styles/variables-hp"as *;
 %btn-option {
     border: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    background-color: #6B63B5;
+    background-color: $color-primary-button;
     padding: 8px 0;
     width: 50%;
     font-family: "open_sanssemibold";
@@ -47,7 +47,7 @@
 }
 
 .content-favorite {
-    background-color: #6B63B5;
+    background-color: $color-primary-button;
     width: 100%;
     border-radius: 10px;
     padding: 40px 20px 20px 20px;

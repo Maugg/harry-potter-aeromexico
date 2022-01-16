@@ -1,4 +1,5 @@
 @use "../../../Styles/mixins"as *;
+@use "../../../Styles/variables-hp"as *;
 .button-hp{
     display: inline-block;
     padding: 15px;
@@ -6,7 +7,7 @@
     font-family: "open_sanssemibold";
     letter-spacing: 2px;
     font-size: 17px;
-    border: 4px solid #6B63B5 ;
+    border: 4px solid $color-border-button ;
     background: rgba(0, 0, 0, 0.6);
     transition: all .2s linear;
     @include breakpoint("sm"){
@@ -14,11 +15,14 @@
         padding: 12px;
     }
     &:hover{
-        background: rgba(107, 99, 181, 0.6);
+        background: $color-hover-button;
+        @include breakpoint("sm"){
+            background: $color-primary-button;
+        }
     }
   
 }
 
 .btn-active{
-    background-color: #6B63B5;
+    background-color: $color-active-button;
 }
