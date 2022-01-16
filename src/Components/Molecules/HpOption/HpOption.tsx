@@ -4,10 +4,11 @@ import { connect, ConnectedProps } from "react-redux";
 import { keyRandom, LatteFetch } from "../../../codigo-latte-library";
 import { ReactComponent as IconFavorite } from "../../../img/Rectangle 4.svg";
 import { ReactComponent as IconUser } from "../../../img/User_fill_add.svg";
+import { addCharacter, setDeleteFavorites } from "../../../Redux/actionsCreator";
 import HpButton from "../../Atoms/HpButton/HpButton";
 import HpFavorite from "../HpFavorite/HpFavorite";
 import HpInput from "../HpInput/HpInput";
-function HpOption({ favorites }: PropsFromRedux): JSX.Element {
+function HpOption({ favorites, students, staff, deleteFavorites, newCharacter }: PropsFromRedux): JSX.Element {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [show, setShow] = useState(false);
     const [validateInput, setValidateInput] = useState<boolean[]>([true, true, true, true, false]);
@@ -22,8 +23,8 @@ function HpOption({ favorites }: PropsFromRedux): JSX.Element {
                 <span className={`content-favorite ${showMenu ? "d-inline-block" : "d-none"}`}>
                     {
                         favorites.length ?
-                            favorites.map((favorite, index) => <HpFavorite key={`${keyRandom()}-${index}`} name={favorite.name} thumbnail={favorite.img} />)
-                            : <HpFavorite name={"Sin favoritos"} thumbnail="http://hp-api.herokuapp.com/images/crabbe.jpg" />
+                            favorites.map((favorite, index) => <HpFavorite key={`${keyRandom()}-${index}`} name={favorite.name} thumbnail={favorite.img} handleFuntion={() => { deleteFavoriteCharacterList({ name: favorite.name, img: favorite.img, id: favorite.id }) }} />)
+                            : <span className=" not-content-favorite text-light">Sin favoritos</span>
                     }
 
                 </span>
@@ -83,7 +84,7 @@ function HpOption({ favorites }: PropsFromRedux): JSX.Element {
         evt.preventDefault();
         const headers = new Headers();
         headers.append("Content-Type", "application/json")
-        
+
         let validate = ["name", "dateOfBirth", "eyeColour", "hairColour"];
         const formElement = evt.target as HTMLFormElement;
         const formData = new FormData(formElement);
@@ -103,14 +104,25 @@ function HpOption({ favorites }: PropsFromRedux): JSX.Element {
         objCharacter.hogwartsStaff = typeCharacter === "hogwartsStaff";
         objCharacter.alive = true;
         objCharacter.dateOfBirth = objCharacter.dateOfBirth.split("-").reverse().join("-");
+        objCharacter.id = students.length + staff.length + 1;
         console.log(objCharacter);
-        
+
         if (!validateInputForm.includes(false)) {
             await crud.create(`${process.env.REACT_APP_URL}/${objCharacter.hogwartsStudent ? "hp-students" : "hp-staff"}`, { headers, body: JSON.stringify(objCharacter) });
-    
+            if (!crud.error) {
+                newCharacter(objCharacter);
+                handleClose();
+            }
+
         } else {
             setValidateInput([...validateInputForm, validateInputForm.includes(false)]);
         }
+    }
+
+    async function deleteFavoriteCharacterList({ name, img, id }: FavoriteCharacter) {
+        await crud.delete(`${process.env.REACT_APP_URL}/hp-favorites/${id}`);
+        deleteFavorites({ name, img, id });
+
     }
 
     function handleClose() { setShow(false); }
@@ -118,12 +130,18 @@ function HpOption({ favorites }: PropsFromRedux): JSX.Element {
 
 }
 
-const mapStateToProps = (state: { favorites: FavoriteCharacter[] }) => {
+const mapStateToProps = (state: InitDataStore) => {
     return {
-        favorites: state.favorites
+        favorites: state.hpFavorities,
+        students: state.hpStudents,
+        staff: state.hpStaff
     }
 }
-const conector = connect(mapStateToProps);
+const mapDispath = {
+    deleteFavorites: setDeleteFavorites,
+    newCharacter: addCharacter
+}
+const conector = connect(mapStateToProps, mapDispath);
 type PropsFromRedux = ConnectedProps<typeof conector>;
 
 export default conector(HpOption);

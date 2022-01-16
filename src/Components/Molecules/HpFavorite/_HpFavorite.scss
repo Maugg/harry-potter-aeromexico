@@ -1,12 +1,16 @@
-.favorite-character {
-    display: inline-flex;
+%base-favorite-character{
     width: 100%;
-    justify-content: space-between;
     padding-top: 8px;
     padding-bottom: 8px;
     font-family: "open_sanssemibold";
     font-size: 18px;
     border-bottom: 1px solid #403B6D;
+}
+.favorite-character {
+    display: inline-flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #403B6D;
+    @extend %base-favorite-character;
 }
 
 .favorite-character__thumbnail {
@@ -15,4 +19,13 @@
     border-radius: 50%;
     object-fit: cover;
     object-position: 50% 30%;
+}
+
+.not-content-favorite{
+    @extend %base-favorite-character;
+    display: inline-block;
+    text-align: center;
+}
+.icon-trash:hover{
+    cursor: pointer;
 }

@@ -16,9 +16,10 @@ interface Props extends PropsFromRedux {
     alive: boolean,
     image: string,
     typeCharacter: string,
-    favorite: boolean
+    favorite: boolean,
+    id:number
 }
-function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive, image, typeCharacter, setFavorites, favorite, favorites }: Props): JSX.Element {
+function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive, image, typeCharacter, setFavorites, favorite, favorites, id }: Props): JSX.Element {
     const crud = new LatteFetch();
     const [show, setShow] = useState(false);
     return (
@@ -28,7 +29,7 @@ function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive,
                     <div><img src={image} alt={name} /></div>
                 </div>
                 <div className="card-character__description">
-                    <p className="card-character__resume">{`${alive ? "vivo" : "finado"} / ${typeCharacter}`} <IconFavorite className={favorite ? "select-icon" : ""} onClick={(evt) => { addFavorite(evt) }} /> </p>
+                    <p className="card-character__resume">{`${alive ? "vivo" : "finado"} / ${typeCharacter}`} <IconFavorite className={favorite ? "select-icon" : ""} onClick={(evt) => { addFavorite(evt,id) }} /> </p>
                     <p className="card-character__head mt-5">{name}</p>
                     <div>
                         <p className="mt-5"><span>Cumpleaños:</span> {dateOfBirth || "Sin dato"}</p>
@@ -55,7 +56,7 @@ function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive,
         </>
     );
 
-    async function addFavorite(evt: React.MouseEvent) {
+    async function addFavorite(evt: React.MouseEvent, id:number) {
         let nameCharacter = name;
         let element: SVGSVGElement = evt.target as SVGSVGElement;
         let parent = element.parentElement;
@@ -72,8 +73,8 @@ function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive,
         if (parent?.classList.contains("select-icon")) {
             const headers = new Headers();
             headers.append("Content-Type", "application/json")
-            await crud.create(`${process.env.REACT_APP_URL}/hp-favorites`, { headers, body: JSON.stringify({ name: nameCharacter, img: image }) })
-            setFavorites({ name: nameCharacter, img: image });
+            await crud.create(`${process.env.REACT_APP_URL}/hp-favorites`, { headers, body: JSON.stringify({ name: nameCharacter, img: image,id}) })
+            setFavorites({ name: nameCharacter, img: image, id });
         }
 
 
@@ -84,10 +85,10 @@ function Card({ name, dateOfBirth, gender, eyesColour, hairColour, house, alive,
     function handleShow() { setShow(true); }
 }
 
-const mapStateToProps = (state: { favorites: FavoriteCharacter[] }) => {
+const mapStateToProps = (state: InitDataStore) => {
 
     return {
-        favorites: state.favorites
+        favorites: state.hpFavorities
     }
 }
 
