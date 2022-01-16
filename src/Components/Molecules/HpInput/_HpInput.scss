@@ -17,13 +17,15 @@
         height: 70px;
         font-family: "open_sansregular";
         border: none;
-        letter-spacing: 1.2px;
+        padding: 0 8px;
         font-size: 20px;
         border-bottom: 2px solid #BABFC0;
         //color: black;
         &:focus{
             outline-color: #0E4DA4;
+            box-shadow: none;
         }
+        width: 100%;
     }
 
 }
@@ -65,7 +67,10 @@
         cursor: pointer;
     }
 }
-
+.invalidate-input{
+    //outline: 2px solid crimson;
+    box-shadow: 1px 1px 3px #F94343 , -1px -1px 3px #F94343;
+}
 input[type=radio]:checked + .label-radio::after{
     visibility: visible;
 }

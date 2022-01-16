@@ -1,3 +1,5 @@
+@use "../../../Styles/mixins"as *;
+
 %btn-option {
     border: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -8,6 +10,10 @@
     text-transform: uppercase;
     font-size: 14px;
 
+    @include breakpoint("sm") {
+        box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
+    }
+
 }
 
 .content-options {
@@ -15,6 +21,15 @@
     position: absolute;
     top: 0;
     right: 0;
+
+    @include breakpoint("sm") {
+        position: relative;
+        top: initial;
+        right: initial;
+        display: inline-flex !important;
+        flex-direction: column-reverse;
+
+    }
 }
 
 .content-buttons {
@@ -23,6 +38,12 @@
     top: 0;
     left: 0;
 
+    @include breakpoint("sm") {
+        position: relative;
+        z-index: 2;
+    }
+
+
 }
 
 .content-favorite {
@@ -30,6 +51,10 @@
     width: 100%;
     border-radius: 10px;
     padding: 40px 20px 20px 20px;
+
+    @include breakpoint("sm") {
+        padding: 20px 40px 20px 20px;
+    }
 }
 
 .btn-favorite {
@@ -37,12 +62,38 @@
     border-right: 1px solid #403B6D;
     border-radius: 0 0 0 10px;
 
+    @include breakpoint("sm") {
+        border-radius: 10px 0 0 0;
+    }
+
     svg {
         fill: white;
     }
 }
 
+.head-modal {
+    font-family: "open_sansbold";
+
+}
+
 .btn-user {
     @extend %btn-option;
     border-radius: 0 0 10px 0;
+
+    @include breakpoint("sm") {
+        border-radius: 0 10px 0 0;
+    }
+}
+
+.input-mobile {
+    @include breakpoint("sm") {
+        flex-direction: column;
+
+        & > div {
+            width: 100%;
+        }
+        & > div:nth-of-type(even) {
+            padding-left: 0;
+        }
+    }
 }

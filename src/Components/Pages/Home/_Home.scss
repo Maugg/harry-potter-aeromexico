@@ -4,6 +4,13 @@
     width: 70%;
     margin-left: auto;
     margin-right: auto;
+    @include breakpoint("xxl"){
+        width: 90%;
+    }
+
+    @include breakpoint("xl"){
+        width: 95%;
+    }
 }
 
 .filter{
@@ -13,8 +20,28 @@
         text-align: center;
         button{
             width: 288px;
+            @include breakpoint("sm"){
+                width: 150px;
+            }
+        }
+        button:nth-child(1){
+            @include breakpoint("sm"){
+                margin-right: 15px !important;
+            }
         }
     }
-    
+
+}
+
+.fixed-mobile{
+    @include breakpoint("sm"){
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
 }
 

@@ -2,13 +2,24 @@
 $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
     Slytherin: linear-gradient(135deg, #1C792B 0%, #82E95E 100%),
     Ravenclaw: linear-gradient(135deg, #0597B7 0%, #66D1FF 100%),
-    Hufflepuff: linear-gradient(135deg, #FFC700 0%, #FFF388 100%));
+    Hufflepuff: linear-gradient(135deg, #FFC700 0%, #FFF388 100%),
+    SinCasa: linear-gradient(45deg, #b5bdc8 0%, #828c95 48%, #28343b 100%));
 
 .card-character {
-   
+
     border-radius: 16px;
     display: flex;
     overflow: hidden;
+
+    @include breakpoint("lg") {
+        flex-direction: column;
+    }
+
+    @include breakpoint("sm") {
+        flex-direction: column;
+        border-radius: 8px;
+    }
+
     //box-shadow: 3px 3px 10px darkgrey;
     @each $key,
     $var in $map-house {
@@ -17,16 +28,37 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
         }
     }
 
-    @include BEM("el","thumbnail"){
+    @include BEM("el", "thumbnail") {
         width: 40%;
         display: flex;
         justify-content: center;
         align-items: center;
-        div{
+
+        @include breakpoint("lg") {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        @include breakpoint("sm") {
+            padding: 5px 0;
+        }
+
+        div {
             width: 210px;
             height: 210px;
+
+            @include breakpoint("xl") {
+                width: 180px;
+                height: 180px;
+            }
+
+            @include breakpoint("sm") {
+                width: 90px;
+                height: 90px;
+            }
         }
-        img{
+
+        img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
@@ -35,45 +67,98 @@ $map-house: (Gryffindor: linear-gradient(135deg, #FF0000 0%, #FED482 100%),
 
         }
     }
-    
+
     @include BEM("el", "description") {
         width: 60%;
         font-size: 18px;
         line-height: 27px;
         color: #374A59;
         padding: 25px;
-        p:not(.card__head){
+
+        p:not(.card__head) {
             word-spacing: 2px;
             text-transform: capitalize;
-            span{
+
+            span {
                 font-family: 'open_sansbold';
             }
         }
-        p{
+
+        p {
             margin: 0;
+        }
+
+        @include breakpoint("lg") {
+            width: 100%;
+        }
+
+        @include breakpoint("sm") {
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 10px;
+
+            &>div {
+                display: none;
+            }
         }
     }
 
     @include BEM("el", "head") {
         font-family: "open_sansbold", 'Times New Roman', Times, serif;
         font-size: 30px;
+
+        @include breakpoint("xl") {
+            font-size: 26px;
+        }
+
+        @include breakpoint("lg") {
+            font-size: 26px;
+        }
+
+        @include breakpoint("sm") {
+            margin-top: 10px !important;
+            font-size: 18px;
+            text-align: center;
+            height: 50px;
+        }
     }
 
-    @include BEM("el","resume"){
+    @include BEM("el", "resume") {
         color: #999999;
-        text-transform: uppercase;
+        text-transform: uppercase !important;
         font-family: 'open_sanssemibold';
         word-spacing: 3px;
-        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        svg {
+            width: 30px;
+            height: 30px;
+
+            &:hover {
+                cursor: pointer;
+                fill: black;
+            }
+        }
+
+        @include breakpoint("sm") {
+            font-size: 15px;
+            height: 50px;
+        }
     }
 
-    @include BEM("mf", "status-live"){
+    @include BEM("mf", "status-live") {
         background-color: #ffffff;
     }
 
-    @include BEM("mf", "status-dead"){
+    @include BEM("mf", "status-dead") {
         background-color: #CCCCCC;
     }
 
 
+}
+
+.select-icon {
+    fill: black;
 }

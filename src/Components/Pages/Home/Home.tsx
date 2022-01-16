@@ -4,31 +4,30 @@ import Card from "../../Molecules/Card/Card";
 import title from "../../../img/Harry_Potter_wordmark 1.png";
 import HpButton from "../../Atoms/HpButton/HpButton";
 import HpOption from "../../Molecules/HpOption/HpOption";
-function Home(): JSX.Element {
+import {connect, ConnectedProps } from "react-redux";
+
+function Home({favorites}:PropsFromRedux): JSX.Element {
     const crud = new LatteFetch();
     const [cards, setCards] = useState<Character[] | false>(false);
-    const [dataCharacters, setDataCharacters] = useState<DbCharacters>({ students: [], characters: [], staff: [] });
+    const [dataCharacters, setDataCharacters] = useState<DbCharacters>({ students: [], characters: [], staff: [], favorites: [] });
+    const [btnActive, setBtnActive] = useState<boolean[]>([true,false]);
     useEffect(() => {
         let students: Character[] = [];
         let staff: Character[] = [];
         let characters: Character[] = [];
+        let favorites: FavoriteCharacter[] = [];
         (async () => {
-            await crud.read("http://localhost:3004/hp-students");
+            await crud.read(`${process.env.REACT_APP_URL}/hp-students`);
             if (!crud.error) {
                 students = crud.data;
 
             }
-            await crud.read("http://localhost:3004/hp-characters");
-            if (!crud.error) {
-                characters = crud.data;
-
-            }
-            await crud.read("http://localhost:3004/hp-staff");
+            await crud.read(`${process.env.REACT_APP_URL}/hp-staff`);
             if (!crud.error) {
                 staff = crud.data;
             }
-            setDataCharacters({ students, staff, characters })
-            setCards(characters);
+            setDataCharacters({ students, staff, characters, favorites })
+            setCards(students);
         })()
     }, []);
     return (
@@ -36,7 +35,7 @@ function Home(): JSX.Element {
 
             <main>
                 <section className="container-hp text-end ">
-                    <div className="position-relative" style={{height:"30px"}}>
+                    <div className="position-relative fixed-mobile" style={{ height: "30px" }}>
                         <HpOption />
                     </div>
                 </section>
@@ -44,16 +43,20 @@ function Home(): JSX.Element {
                     <img src={title} alt="harry potter" />
                     <h1 className="text-light filter__title mt-5 ">Selecciona tu filtro</h1>
                     <div className="filter__options mt-5" onClick={(env) => { showSection(env) }}>
-                        <HpButton text="estudiante" className="me-5" dataset="std" />
-                        <HpButton text="staff" dataset="stf" />
+                        <HpButton text="estudiante" className={`me-5 ${btnActive[0] && "btn-active"}`} dataset="std" />
+                        <HpButton text="staff" dataset="stf" className={`${btnActive[1] && "btn-active"}`}/>
                     </div>
-
                 </section>
                 <section className="container-hp" style={{ marginTop: "100px" }}>
                     <div className="grid-flex-2 gap">
                         {
                             cards &&
-                            cards.map(card => <div><Card key={`card-${keyRandom()}`} name={card.name} alive={card.alive} dateOfBirth={card.dateOfBirth} eyesColour={card.eyeColour} gender={card.gender} hairColour={card.hairColour} house={card.house} image={card.image} typeCharacter={card.hogwartsStudent ? "estudiante" : "staff"} /></div>)
+                            cards.map(card => {
+                                let numberFavorites:number = favorites.filter(favorite => favorite.name === card.name).length;
+                               return (<div>
+                                    <Card key={`card-${keyRandom()}`} name={card.name} alive={card.alive} dateOfBirth={card.dateOfBirth} eyesColour={card.eyeColour} gender={card.gender} hairColour={card.hairColour} house={card.house || "SinCasa"} image={card.image} typeCharacter={card.hogwartsStudent ? "estudiante" : "staff"} favorite={numberFavorites > 0} />
+                                </div>)
+                            })
 
                         }
                     </div>
@@ -71,9 +74,11 @@ function Home(): JSX.Element {
             switch (element.dataset.id) {
                 case "std":
                     setCards(dataCharacters.students);
+                    setBtnActive([true,false]);
                     break;
                 case "stf":
                     setCards(dataCharacters.staff);
+                    setBtnActive([false,true]);
                     break;
 
                 default:
@@ -86,4 +91,13 @@ function Home(): JSX.Element {
 
 }
 
-export default Home;
+const mapStateToProps = (state: { favorites: FavoriteCharacter[] }) => {
+    console.log(state);
+
+    return {
+        favorites: state.favorites
+    }
+}
+const conector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof conector>;
+export default conector(Home);
