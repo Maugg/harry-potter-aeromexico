@@ -9,7 +9,7 @@ class LatteFetch {
     //     this.url = url;
     //     this.body = body;
     // }
-    constructor() { }
+    //constructor() { }
 
     async read(url: string, body?: { method: RequestFetch, headers: Headers }) {
 
