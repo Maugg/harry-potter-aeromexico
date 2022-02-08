@@ -6,7 +6,6 @@ import HpButton from "../../Atoms/HpButton/HpButton";
 import HpOption from "../../Molecules/HpOption/HpOption";
 import { ReactComponent as IconReturn } from "../../../img/return-arrow.svg"
 import { connect, ConnectedProps } from "react-redux";
-import HpButton2 from "../../Atoms/HpButton/HpButton2";
 
 function Home({ favorites, staff, students }: PropsFromRedux): JSX.Element {
     //const crud = new LatteFetch();

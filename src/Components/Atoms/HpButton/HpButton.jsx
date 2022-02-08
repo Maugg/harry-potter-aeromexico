@@ -1,7 +1,8 @@
 
 import React, { Component } from "react";
 
-class HpButton2 extends Component {
+class HpButton extends Component {
+    
     constructor(props){
         super(props)
     }
@@ -18,4 +19,4 @@ class HpButton2 extends Component {
     }
 }
 
-export default HpButton2;
+export default HpButton;
