@@ -3,9 +3,7 @@ import React, { Component } from "react";
 
 class HpButton extends Component {
     
-    constructor(props){
-        super(props)
-    }
+   
 
     render(){
         let buttonElement = <></>;
