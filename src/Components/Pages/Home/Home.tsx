@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { keyRandom} from "../../../codigo-latte-library";
+import { keyRandom } from "../../../codigo-latte-library";
 import Card from "../../Molecules/Card/Card";
 import title from "../../../img/Harry_Potter_wordmark 1.png";
 import HpButton from "../../Atoms/HpButton/HpButton";
 import HpOption from "../../Molecules/HpOption/HpOption";
+import { ReactComponent as IconReturn } from "../../../img/return-arrow.svg"
 import { connect, ConnectedProps } from "react-redux";
+import HpButton2 from "../../Atoms/HpButton/HpButton2";
 
 function Home({ favorites, staff, students }: PropsFromRedux): JSX.Element {
     //const crud = new LatteFetch();
-    const [cards, setCards] = useState<Character[] >(students);
+    const [cards, setCards] = useState<Character[]>(students);
     const [btnActive, setBtnActive] = useState<boolean[]>([true, false]);
-   useEffect(() => {
+    useEffect(() => {
         setCards(students);
     }, [students]);
 
@@ -31,20 +33,28 @@ function Home({ favorites, staff, students }: PropsFromRedux): JSX.Element {
                     </div>
                 </section>
                 <section className="container-hp" style={{ marginTop: "100px" }}>
-                    <div className="grid-flex-2 gap">
+                    <div>
+                        <HpButton text="Finados" handleFuntion={() => { filterCard() }} className="me-3" />
+                        <span className="icon-return " onClick={()=>{clearFilter()}}><IconReturn /></span>    
+                    </div>
+                    <div className="grid-flex-2 gap mt-5">
                         {
-                            cards &&
-                            cards.map((card,index) => {
-                                let random = keyRandom();                                
+                            cards.length > 0 &&
+                            cards.map((card, index) => {
+                                let random = keyRandom();
                                 let numberFavorites: number = favorites.filter(favorite => favorite.name === card.name).length;
                                 return (
-                                <div key={`card-${random}-${index}`} >
-                                    <Card name={card.name} alive={card.alive} dateOfBirth={card.dateOfBirth} eyesColour={card.eyeColour} gender={card.gender} hairColour={card.hairColour} house={card.house || "SinCasa"} image={card.image} typeCharacter={card.hogwartsStudent ? "estudiante" : "staff"} favorite={numberFavorites > 0} id={card.id || 0} />
-                                </div>)
+                                    <div key={`card-${random}-${index}`} >
+                                        <Card name={card.name} alive={card.alive} dateOfBirth={card.dateOfBirth} eyesColour={card.eyeColour} gender={card.gender} hairColour={card.hairColour} house={card.house || "SinCasa"} image={card.image} typeCharacter={card.hogwartsStudent ? "estudiante" : "staff"} favorite={numberFavorites > 0} id={card.id || 0} />
+                                    </div>)
                             })
 
                         }
                     </div>
+                    {
+                        cards.length === 0 && 
+                        <h1 className="text-light filter__title mt-5 text-center">Sin datos</h1>
+                    }
 
                 </section>
             </main>
@@ -69,6 +79,15 @@ function Home({ favorites, staff, students }: PropsFromRedux): JSX.Element {
             }
         }
 
+    }
+
+    function filterCard() {
+        const cardData = cards.filter(card => !card.alive);
+        setCards([...cardData]);
+    }
+    function clearFilter(){
+        const cardData = btnActive[0] ? students : staff;
+        setCards([...cardData]);
     }
 
 
